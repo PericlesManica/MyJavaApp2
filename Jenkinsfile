@@ -11,11 +11,9 @@ pipeline {
 
         stage('Build') {
             steps {
-
                 // Compila e constrói o projeto Maven
                 script {
                     def mvnHome = tool 'Maven'
-                    sh "chmod +x ${mvnHome}/bin/mvn"
                     sh "${mvnHome}/bin/mvn clean install"
                 }
             }
@@ -37,6 +35,15 @@ pipeline {
                 script {
                     def mvnHome = tool 'Maven'
                     sh "${mvnHome}/bin/mvn deploy"
+                }
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                // Executa a aplicação Java após a construção
+                script {
+                    sh "java -jar target/my-java-app-1.0-SNAPSHOT.jar"
                 }
             }
         }
