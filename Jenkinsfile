@@ -11,9 +11,11 @@ pipeline {
 
         stage('Build') {
             steps {
+
                 // Compila e constrói o projeto Maven
                 script {
                     def mvnHome = tool 'Maven'
+                    sh "chmod +x ${mvnHome}/bin/mvn"
                     sh "${mvnHome}/bin/mvn clean install"
                 }
             }
